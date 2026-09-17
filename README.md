@@ -1,7 +1,7 @@
 # CORE-V investigation reports
 
 Worked examples of how we investigate an RTL verification issue and what the
-finished document looks like. Sixteen issues from the OpenHW CORE-V family,
+finished document looks like. Twenty-one issues from the OpenHW CORE-V family,
 each taken from a public GitHub issue to a disposition backed by evidence that
 can be rerun.
 
@@ -19,7 +19,7 @@ true, the waiver text to apply, and a Limitations section stating what the
 result does not establish.
 
 Then read the [disposition register](reports/disposition-register.pdf) for all
-sixteen at a glance.
+twenty-one at a glance.
 
 ## What is in every report
 
@@ -53,6 +53,11 @@ no data for. Absent data is stated as absent.
 | [#1011](https://github.com/openhwgroup/cv32e40p/issues/1011) | cv32e40p | Debug entry with no recorded cause | Dead code, proven | **open, no replies** | [PDF](reports/rtl-triage-cv32e40p-1011.pdf) |
 | [#1012](https://github.com/openhwgroup/cv32e40p/issues/1012) | cv32e40p | Debug flush with an impossible single cause | Dead code, proven | **open, no replies** | [PDF](reports/rtl-triage-cv32e40p-1012.pdf) |
 | [#1015](https://github.com/openhwgroup/cv32e40p/issues/1015) | cv32e40p | Operand-select combination in the ID stage | Dead code, proven | **open, no replies** | [PDF](reports/rtl-triage-cv32e40p-1015.pdf) |
+| [#1016](https://github.com/openhwgroup/cv32e40p/issues/1016) | cv32e40p | Write-back contention flag in the EX stage | Dead code, proven | **open, no replies** | [PDF](reports/rtl-triage-cv32e40p-1016.pdf) |
+| [#1017](https://github.com/openhwgroup/cv32e40p/issues/1017) | cv32e40p | Result memorisation enable in the EX stage | Dead code, proven | **open, no replies** | [PDF](reports/rtl-triage-cv32e40p-1017.pdf) |
+| [#1018](https://github.com/openhwgroup/cv32e40p/issues/1018) | cv32e40p | Result memorisation clear in the EX stage | Dead code, proven | **open, no replies** | [PDF](reports/rtl-triage-cv32e40p-1018.pdf) |
+| [#1019](https://github.com/openhwgroup/cv32e40p/issues/1019) | cv32e40p | Ready handshake in the divide and square-root unit | Dead code, proven | **open, no replies** | [PDF](reports/rtl-triage-cv32e40p-1019.pdf) |
+| [#1023](https://github.com/openhwgroup/cv32e40p/issues/1023) | cv32e40p | Two-cycle APU write-back path in the EX stage | Dead code, proven, for FPU latency 0 only | **open, one question from OpenHW in July 2024, unanswered** | [PDF](reports/rtl-triage-cv32e40p-1023.pdf) |
 | [#196](https://github.com/openhwgroup/cv32e40x/issues/196) | cv32e40x | Interrupt during single-step retired a handler instruction | Bug confirmed, fix verified | closed 2021-10-12 | [PDF](reports/rtl-triage-cv32e40x-196.pdf) |
 | [#198](https://github.com/openhwgroup/cv32e40x/issues/198) | cv32e40x | CSR write slips through while debug halts the pipeline | Bug confirmed, fix verified | closed 2021-09-08 | [PDF](reports/rtl-triage-cv32e40x-198.pdf) |
 | [#323](https://github.com/openhwgroup/cv32e40x/issues/323) | cv32e40x | zext.h wrongly rejected as illegal with the B extension (closed bug, replayed) | Bug confirmed, fix verified | closed 2021-11-25 | [PDF](reports/rtl-triage-cv32e40x-323.pdf) |
@@ -61,10 +66,11 @@ no data for. Absent data is stated as absent.
 | [#558](https://github.com/openhwgroup/cv32e40x/issues/558) | cv32e40x | Does minstret count an mret executed in debug mode? (closed bug, replayed) | Bug confirmed, fix verified | closed 2022-08-04 | [PDF](reports/rtl-triage-cv32e40x-558.pdf) |
 | [#993](https://github.com/openhwgroup/cv32e40x/issues/993) | cv32e40x | Does CV32E40X fetch its first instruction from boot+4? | Not reproduced | **open, no replies** | [PDF](reports/rtl-triage-cv32e40x-993.pdf) |
 
-Ten of these issues are still open. The nine CV32E40P coverage holes were
-filed in June 2024 and have had no replies since. CV32E40X #993 is also open;
-we did not reproduce the reported behaviour, and the report says so rather than
-calling it fixed.
+Fifteen of these issues are still open. The fourteen CV32E40P coverage holes
+were filed in June and July 2024. Thirteen have had no reply at all; on #1023
+OpenHW asked the filer for more detail in July 2024 and the question is still
+open. CV32E40X #993 is also open; we did not reproduce the reported behaviour,
+and the report says so rather than calling it fixed.
 
 The six closed CV32E40X issues were replayed blind against their pre-fix
 revisions and then against the fix, to test the method against known answers.
@@ -94,6 +100,36 @@ only. Those three are never described as the same thing.
 - Not a claim that any core is verified. Specific issues were dispositioned
   under specific configurations, named in each report.
 - Not client work. These are public cores and public issues.
+
+## Notes on these reports
+
+A few things worth saying plainly, because they affect how much weight to put
+on what is here.
+
+**These were produced quickly.** The first sixteen reports came out of a short
+run of work, and the five FPU-configuration reports (#1016, #1017, #1018,
+#1019, #1023) were added in a single day. Each one is a genuine result with
+the evidence attached, not a sketch, but a day is a day. With more time on any
+single issue we would go further: check the neighbouring expression rows rather
+than only the one that was flagged, run the other parameter configurations,
+tighten the environment assumptions instead of accepting the ones the upstream
+formal setup uses, and drive a directed simulation test alongside the proof
+rather than relying on a reachability cover.
+
+**Nothing here is a sign-off.** Every report says so on every page. These are
+investigation records. A waiver written from one of them should be reviewed by
+an engineer who owns the block before it goes into a coverage exclusion file.
+
+**Where a report stops, it says so.** #1023 is proven for FPU latency 0 and
+not for latency 2, and the report states that in the waiver text rather than
+quietly generalising. CV32E40X #993 was not reproduced and is recorded as not
+reproduced. CV32E40P #1022 was looked at and is deliberately not published,
+because the issue names no module instance or line and we would be guessing.
+
+**One disagreement is recorded rather than smoothed over.** On #1023 the
+assertion published upstream negates a signal where the RTL asserts it. We
+proved the guard as it appears in the RTL and noted the difference in the
+report.
 
 ## Contact
 
