@@ -131,7 +131,44 @@ assertion published upstream negates a signal where the RTL asserts it. We
 proved the guard as it appears in the RTL and noted the difference in the
 report.
 
+## How long this takes
+
+The fourteen CV32E40P coverage holes in the table above were filed in June and
+July 2024. Thirteen have never had a reply. That gap, between a hole being
+found and a hole being dispositioned, is what this method is aimed at.
+
+Here is what the same work took on this side, measured rather than estimated.
+
+- For the ten issues where wall-clock was recorded, the time from opening the
+  issue to a written disposition with evidence attached ran from 5 to 66
+  minutes. Six of the ten were under 15 minutes. The slowest, #1012, spent most
+  of its hour on four engine timeouts before a different proof technique worked.
+- Inside that, the engine time is small. Each of the five FPU-configuration
+  issues took between 48 and 60 seconds of proof and cover time.
+- The first sixteen reports were produced across 9 and 10 September 2026. The
+  five FPU-configuration reports were produced on 17 September 2026.
+
+Three things account for it, and none of them is clever:
+
+1. **No licence to wait for.** sv2v, Yosys, SymbiYosys, Verilator, z3 and
+   yosys-slang are all open source. There is no seat to procure, no queue for a
+   token, and nothing stopping a reviewer from rerunning the check themselves.
+2. **The property targets the row that was flagged**, not the block it lives
+   in. Proving one named expression row unreachable is a much smaller question
+   than specifying a controller, and it is the question the coverage report
+   actually asked.
+3. **The proof and the reachability cover run together.** A proof that passes
+   because its antecedent is unreachable is worthless, and running both at once
+   catches that in the same minute rather than in review a week later.
+
+These are durations for work already done on public cores with a manifest that
+elaborates. They are not a quoted turnaround. On a design we have not seen
+before, the part that varies most is getting it to elaborate at all, which is
+why nothing here is offered as a fixed time.
+
 ## Contact
 
 Rivoryxa Technologies. If you have a coverage hole blocking a sign-off, or a
-bug report nobody has reproduced, we would like to look at it.
+bug report nobody has reproduced, we would like to look at it. Send the issue
+and the configuration it applies to, and we will come back with either a
+disposition and its evidence or a clear statement of what stopped us.
