@@ -88,7 +88,7 @@ only. Those three are never described as the same thing.
 
 ## What these documents are not
 
-- Not a verification sign-off. Each one is an agent investigation record and
+- Not a verification sign-off. Each one is an internal investigation record and
   states on every page that it requires engineering review.
 - Not merged upstream. Nothing here has been accepted by OpenHW.
 - Not a claim that any core is verified. Specific issues were dispositioned
