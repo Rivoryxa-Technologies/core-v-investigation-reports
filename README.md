@@ -1,7 +1,7 @@
 # CORE-V investigation reports
 
 Worked examples of how we investigate an RTL verification issue and what the
-finished document looks like. Twenty-one issues from the OpenHW CORE-V family,
+finished document looks like. Twenty-two issues from the OpenHW CORE-V family,
 each taken from a public GitHub issue to a disposition backed by evidence that
 can be rerun.
 
@@ -19,7 +19,7 @@ true, the waiver text to apply, and a Limitations section stating what the
 result does not establish.
 
 Then read the [disposition register](reports/disposition-register.pdf) for all
-twenty-one at a glance.
+twenty-two at a glance.
 
 ## What is in every report
 
@@ -57,6 +57,7 @@ no data for. Absent data is stated as absent.
 | [#1017](https://github.com/openhwgroup/cv32e40p/issues/1017) | cv32e40p | Result memorisation enable in the EX stage | Dead code, proven | **open, no replies** | [PDF](reports/rtl-triage-cv32e40p-1017.pdf) |
 | [#1018](https://github.com/openhwgroup/cv32e40p/issues/1018) | cv32e40p | Result memorisation clear in the EX stage | Dead code, proven | **open, no replies** | [PDF](reports/rtl-triage-cv32e40p-1018.pdf) |
 | [#1019](https://github.com/openhwgroup/cv32e40p/issues/1019) | cv32e40p | Ready handshake in the divide and square-root unit | Dead code, proven | **open, no replies** | [PDF](reports/rtl-triage-cv32e40p-1019.pdf) |
+| [#1022](https://github.com/openhwgroup/cv32e40p/issues/1022) | cv32e40p | Arbitration between operation groups in the FPU | Cause proven; uncovered lines not enumerated | **open, no replies** | [PDF](reports/rtl-triage-cv32e40p-1022.pdf) |
 | [#1023](https://github.com/openhwgroup/cv32e40p/issues/1023) | cv32e40p | Two-cycle APU write-back path in the EX stage | Dead code, proven, for FPU latency 0 only | **open, one question from OpenHW in July 2024, unanswered** | [PDF](reports/rtl-triage-cv32e40p-1023.pdf) |
 | [#196](https://github.com/openhwgroup/cv32e40x/issues/196) | cv32e40x | Interrupt during single-step retired a handler instruction | Bug confirmed, fix verified | closed 2021-10-12 | [PDF](reports/rtl-triage-cv32e40x-196.pdf) |
 | [#198](https://github.com/openhwgroup/cv32e40x/issues/198) | cv32e40x | CSR write slips through while debug halts the pipeline | Bug confirmed, fix verified | closed 2021-09-08 | [PDF](reports/rtl-triage-cv32e40x-198.pdf) |
@@ -66,10 +67,10 @@ no data for. Absent data is stated as absent.
 | [#558](https://github.com/openhwgroup/cv32e40x/issues/558) | cv32e40x | Does minstret count an mret executed in debug mode? (closed bug, replayed) | Bug confirmed, fix verified | closed 2022-08-04 | [PDF](reports/rtl-triage-cv32e40x-558.pdf) |
 | [#993](https://github.com/openhwgroup/cv32e40x/issues/993) | cv32e40x | Does CV32E40X fetch its first instruction from boot+4? | Not reproduced | **open, no replies** | [PDF](reports/rtl-triage-cv32e40x-993.pdf) |
 
-Fifteen of these issues are still open. The fourteen CV32E40P coverage holes
-were filed in June and July 2024. Thirteen have had no reply at all; on #1023
-OpenHW asked the filer for more detail in July 2024 and the question is still
-open. CV32E40X #993 is also open; we did not reproduce the reported behaviour,
+Sixteen of these issues are still open. Every open CV32E40P coverage-hole
+issue now has a disposition here: fifteen were filed in June and July 2024 and
+fourteen have had no reply at all. On #1023 OpenHW asked the filer for more
+detail in July 2024 and the question is still open. CV32E40X #993 is also open; we did not reproduce the reported behaviour,
 and the report says so rather than calling it fixed.
 
 The six closed CV32E40X issues were replayed blind against their pre-fix
@@ -107,8 +108,8 @@ A few things worth saying plainly, because they affect how much weight to put
 on what is here.
 
 **These were produced quickly.** The first sixteen reports came out of a short
-run of work, and the five FPU-configuration reports (#1016, #1017, #1018,
-#1019, #1023) were added in a single day. Each one is a genuine result with
+run of work, and the six FPU-configuration reports (#1016, #1017, #1018,
+#1019, #1022, #1023) were added in a single day. Each one is a genuine result with
 the evidence attached, not a sketch, but a day is a day. With more time on any
 single issue we would go further: check the neighbouring expression rows rather
 than only the one that was flagged, run the other parameter configurations,
@@ -123,8 +124,10 @@ an engineer who owns the block before it goes into a coverage exclusion file.
 **Where a report stops, it says so.** #1023 is proven for FPU latency 0 and
 not for latency 2, and the report states that in the waiver text rather than
 quietly generalising. CV32E40X #993 was not reproduced and is recorded as not
-reproduced. CV32E40P #1022 was looked at and is deliberately not published,
-because the issue names no module instance or line and we would be guessing.
+reproduced. On #1022 the issue names no module instance or line, so the report
+proves the cause, that the FPU arbiter never has more than one requester, and
+says plainly that mapping it onto specific uncovered lines needs the original
+coverage database.
 
 **One disagreement is recorded rather than smoothed over.** On #1023 the
 assertion published upstream negates a signal where the RTL asserts it. We
@@ -143,10 +146,11 @@ Here is what the same work took on this side, measured rather than estimated.
   issue to a written disposition with evidence attached ran from 5 to 66
   minutes. Six of the ten were under 15 minutes. The slowest, #1012, spent most
   of its hour on four engine timeouts before a different proof technique worked.
-- Inside that, the engine time is small. Each of the five FPU-configuration
-  issues took between 48 and 60 seconds of proof and cover time.
+- Inside that, the engine time is small. Five of the six FPU-configuration
+  issues took between 48 and 60 seconds of proof and cover time. The sixth,
+  #1022, took just under 7 minutes.
 - The first sixteen reports were produced across 9 and 10 September 2026. The
-  five FPU-configuration reports were produced on 17 September 2026.
+  six FPU-configuration reports were produced on 17 September 2026.
 
 Three things account for it, and none of them is clever:
 
