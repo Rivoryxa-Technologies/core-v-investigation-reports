@@ -107,15 +107,12 @@ only. Those three are never described as the same thing.
 A few things worth saying plainly, because they affect how much weight to put
 on what is here.
 
-**These were produced quickly.** The first sixteen reports came out of a short
-run of work, and the six FPU-configuration reports (#1016, #1017, #1018,
-#1019, #1022, #1023) were added in a single day. Each one is a genuine result with
-the evidence attached, not a sketch, but a day is a day. With more time on any
-single issue we would go further: check the neighbouring expression rows rather
-than only the one that was flagged, run the other parameter configurations,
-tighten the environment assumptions instead of accepting the ones the upstream
-formal setup uses, and drive a directed simulation test alongside the proof
-rather than relying on a reachability cover.
+**Each report goes as far as its evidence goes, and no further.** With more
+work on any single issue there is more to do: check the neighbouring expression
+rows rather than only the one that was flagged, run the other parameter
+configurations, tighten the environment assumptions instead of accepting the
+ones the upstream formal setup uses, and drive a directed simulation test
+alongside the proof rather than relying on a reachability cover.
 
 **Nothing here is a sign-off.** Every report says so on every page. These are
 investigation records. A waiver written from one of them should be reviewed by
@@ -133,42 +130,6 @@ coverage database.
 assertion published upstream negates a signal where the RTL asserts it. We
 proved the guard as it appears in the RTL and noted the difference in the
 report.
-
-## How long this takes
-
-The fourteen CV32E40P coverage holes in the table above were filed in June and
-July 2024. Thirteen have never had a reply. That gap, between a hole being
-found and a hole being dispositioned, is what this method is aimed at.
-
-Here is what the same work took on this side, measured rather than estimated.
-
-- For the ten issues where wall-clock was recorded, the time from opening the
-  issue to a written disposition with evidence attached ran from 5 to 66
-  minutes. Six of the ten were under 15 minutes. The slowest, #1012, spent most
-  of its hour on four engine timeouts before a different proof technique worked.
-- Inside that, the engine time is small. Five of the six FPU-configuration
-  issues took between 48 and 60 seconds of proof and cover time. The sixth,
-  #1022, took just under 7 minutes.
-- The first sixteen reports were produced across 9 and 10 September 2026. The
-  six FPU-configuration reports were produced on 17 September 2026.
-
-Three things account for it, and none of them is clever:
-
-1. **No licence to wait for.** sv2v, Yosys, SymbiYosys, Verilator, z3 and
-   yosys-slang are all open source. There is no seat to procure, no queue for a
-   token, and nothing stopping a reviewer from rerunning the check themselves.
-2. **The property targets the row that was flagged**, not the block it lives
-   in. Proving one named expression row unreachable is a much smaller question
-   than specifying a controller, and it is the question the coverage report
-   actually asked.
-3. **The proof and the reachability cover run together.** A proof that passes
-   because its antecedent is unreachable is worthless, and running both at once
-   catches that in the same minute rather than in review a week later.
-
-These are durations for work already done on public cores with a manifest that
-elaborates. They are not a quoted turnaround. On a design we have not seen
-before, the part that varies most is getting it to elaborate at all, which is
-why nothing here is offered as a fixed time.
 
 ## Contact
 
