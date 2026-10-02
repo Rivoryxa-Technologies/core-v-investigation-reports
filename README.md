@@ -137,3 +137,5 @@ Rivoryxa Technologies. If you have a coverage hole blocking a sign-off, or a
 bug report nobody has reproduced, we would like to look at it. Send the issue
 and the configuration it applies to, and we will come back with either a
 disposition and its evidence or a clear statement of what stopped us.
+
+Each investigation is also summarised as a case study on the [Rivoryxa Technologies website](https://www.rivoryxatechnologies.com/case-studies/).
