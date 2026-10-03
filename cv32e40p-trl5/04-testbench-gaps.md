@@ -85,8 +85,8 @@ patch, ACT4 on I0 is still 94/94 and F0 is still 180/181 (only `SmF-00` fails).
 - **The pipelined configurations can't be verified with this testbench as it stands.** Any F1, F2, Z1 or Z2
   result produced with it is really an F0 or Z0 result. This matters for the FPU-depth decision
   ([report 01](01-fpu-pipeline-depth.md)) and for #1060 ([report 02](02-issue-1060-pipelined-fpu.md)).
-- **Debug tests in this testbench exercise nothing in the core.** They can pass without exercising the core's
-  debug logic. Any TRL5 claim that rests on debug tests run in this testbench should be rechecked with the
+- **Debug-request tests in this testbench never deliver a request to the core.** They can pass without
+  exercising the core's external debug-request path (debug entry by `ebreak` is not affected). Any TRL5 claim that rests on debug tests run in this testbench should be rechecked with the
   wiring patch applied.
 - **Both patches are small and keep existing behaviour by default.** We are happy to open them as pull requests
   against cv32e40p-dv-review if that is useful.

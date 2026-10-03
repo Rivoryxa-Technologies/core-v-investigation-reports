@@ -160,6 +160,9 @@ toolchain or OS may read it.
 
 - **It runs today, with no licence.** It finds a real bug at the exact instruction, and it catches the
   interrupt, debug and load-write-back faults we planted.
+- **Its bug-finding power is not yet measured beyond the five faults above.** We are measuring it with a blind
+  fault-injection study across arithmetic, decode, CSR, interrupt and debug logic, and make no detection-rate
+  claim until that is complete.
 - **Use it as a regression gate and a second opinion, not as the sign-off reference.** The gaps below are real,
   and some of them (the debug cause, trigger entries) are exactly where ImperasDV's lock-step model is stronger.
 - **It does not resolve the reference-model question.** It can't tell you whether the current Imperas model
@@ -210,6 +213,11 @@ We are happy to walk through it or run specific programs on request.
 - Trigger-module CSRs
 - `dcsr.stepie`
 - The FS window above
+
+**Not yet explained:** in a later rerun of the unmodified design with the same tools, two results changed:
+one random Zfinx program (`zfinx_arith`, seed 7002, Z0) ended UNRESOLVED, and the replay of
+`illegal_instr_test` DIVERGED where the recorded run MATCHed. Both are being diagnosed; the counts above are
+from the recorded runs.
 
 **Scope:**
 

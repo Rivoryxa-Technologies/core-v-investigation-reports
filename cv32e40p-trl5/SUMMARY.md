@@ -106,6 +106,8 @@ Full report: [05-open-source-cross-check.md](https://github.com/Rivoryxa-Technol
 - Place-and-route numbers for the FPU configurations.
 - Equivalence checking of the retimed netlists.
 - Confirming the `fclass.s` / `fmv.x.w` FS behaviour against Spike and the spec.
+- Two results that changed on a later rerun of the unmodified design (one random Zfinx program, one replay of `illegal_instr_test`), being diagnosed (report 05).
+- Measuring the cross-check's bug-finding power with a blind fault-injection study (report 05).
 - Review of [PR #1072](https://github.com/openhwfoundation/cv32e40p/pull/1072) and [PR #1073](https://github.com/openhwfoundation/cv32e40p/pull/1073).
 
 ## Contact

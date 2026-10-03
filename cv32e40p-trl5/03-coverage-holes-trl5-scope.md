@@ -17,7 +17,7 @@ Three of the ten carry a condition. Read the exceptions below before reusing the
 
 ## The question
 
-At the CVE4 meeting (September 2026), the group agreed to move the PULP extensions (configurations P_F0, P_Z0)
+At the CVE4 meeting (September 2026), the group's plan was to move the PULP extensions (configurations P_F0, P_Z0)
 and the XCV instructions to TRL4. The TRL5 configurations therefore build the core with `COREV_PULP=0`.
 
 The open coverage-hole issues were filed against a COREV_PULP=1 build. The question is whether each hole and
