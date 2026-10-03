@@ -1,0 +1,61 @@
+--- a/tb/core/cv32e40p_dut_wrap.sv	2026-09-21 19:10:54
++++ b/tb/core/cv32e40p_dut_wrap.sv	2026-09-21 19:10:54
+@@ -39,7 +39,8 @@
+     // IRQ
+     input  logic [31:0]                  irq_i,
+     output logic                         irq_ack_o,
+-    output logic [4:0]                   irq_id_o
++    output logic [4:0]                   irq_id_o,
++    input  logic                         debug_req_i
+     );
+ 
+ `ifdef CV32E40P_V100
+@@ -85,7 +86,7 @@
+        .irq_i               (irq_i),
+        .irq_ack_o           (irq_ack_o),
+        .irq_id_o            (irq_id_o),
+-       .debug_req_i         (1'b0),
++       .debug_req_i         (debug_req_i),
+        .debug_havereset_o   (),
+        .debug_running_o     (),
+        .debug_halted_o      (),
+@@ -127,7 +128,7 @@
+        .irq_i               (irq_i),
+        .irq_ack_o           (irq_ack_o),
+        .irq_id_o            (irq_id_o),
+-       .debug_req_i         (1'b0),
++       .debug_req_i         (debug_req_i),
+        .debug_havereset_o   (),
+        .debug_running_o     (),
+        .debug_halted_o      (),
+--- a/tb/core/tb_top.sv	2026-09-21 19:10:54
++++ b/tb/core/tb_top.sv	2026-09-21 19:10:54
+@@ -38,6 +38,9 @@
+     const int CLK2NRESET_DELAY    = 1;
+     const int RESET_ASSERT_CYCLES = 4;
+ 
++    // debug request from the virtual peripheral to the core
++    logic                   debug_req;
++
+     // clock and reset for tb
+     logic                   core_clk;
+     logic                   core_rst_n;
+@@ -249,7 +252,8 @@
+        .data_rdata_i   (data_rdata),
+        .irq_i          (irq),
+        .irq_ack_o      (irq_ack),
+-       .irq_id_o       (irq_id));
++       .irq_id_o       (irq_id),
++       .debug_req_i    (debug_req));
+ 
+     // mm_ram: memory mapped virtual peripheral and RAM model
+     mm_ram
+@@ -279,7 +283,7 @@
+          .irq_ack_i      (irq_ack),
+          .irq_o          (irq),
+ 
+-         .debug_req_o    (),
++         .debug_req_o    (debug_req),
+          .pc_core_id_i   ('0),
+ 
+          .tests_passed_o (tests_passed),

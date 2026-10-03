@@ -10,13 +10,31 @@ contributions.** It exists so that anyone deciding whether to work with us can
 read the actual output first: the reasoning, the evidence, the limits, and the
 places where the answer is "unresolved".
 
+## New: CV32E40P towards TRL5 (October 2026)
+
+A follow-up to the CVE4 meeting of 18 September 2026, answering the open points
+raised there. Start with the [one-page summary](cv32e40p-trl5/SUMMARY.md).
+
+| Report | Question | PDF |
+|---|---|---|
+| [01 FPU pipeline depth](cv32e40p-trl5/01-fpu-pipeline-depth.md) | Which FPU latency for TRL5: cycles, clock and area for F0-F2 and Z0-Z2 | [PDF](cv32e40p-trl5/01-fpu-pipeline-depth.pdf) |
+| [02 #1060 on pipelined FPUs](cv32e40p-trl5/02-issue-1060-pipelined-fpu.md) | Do PR #1065 and PR #1070 hold with FPU pipeline stages enabled? | [PDF](cv32e40p-trl5/02-issue-1060-pipelined-fpu.pdf) |
+| [03 Coverage holes at COREV_PULP=0](cv32e40p-trl5/03-coverage-holes-trl5-scope.md) | Do the hole waivers carry over to the TRL5 scope? | [PDF](cv32e40p-trl5/03-coverage-holes-trl5-scope.pdf) |
+| [04 Testbench gaps](cv32e40p-trl5/04-testbench-gaps.md) | Two gaps in the Verilator core testbench, with patches | [PDF](cv32e40p-trl5/04-testbench-gaps.pdf) |
+| [05 Open-source cross-check](cv32e40p-trl5/05-open-source-cross-check.md) | What can be checked against Spike today, while ImperasDV is relaunched | [PDF](cv32e40p-trl5/05-open-source-cross-check.pdf) |
+
+Test programs, scripts and patches to repeat them are under [`tests/`](tests/) and
+[`cv32e40p-trl5/patches/`](cv32e40p-trl5/patches/).
+
 ## Read one report first
 
 Start with [issue 1010](reports/rtl-triage-cv32e40p-1010.pdf). It is three
-pages. It shows a coverage hole proven unreachable, the two proofs that
-establish it, the anti-vacuity cover that shows the proofs are not trivially
-true, the waiver text to apply, and a Limitations section stating what the
-result does not establish.
+pages. It shows a coverage hole taken row by row: two condition rows proven
+unreachable, with the proofs and the anti-vacuity cover that shows they are not
+trivially true; one row found reachable and closed with a directed test; and a
+Limitations section stating what the result does not establish. (The report's
+header and the disposition register still carry the 9 September disposition,
+"Dead code, proven"; the body has the corrected row-by-row result of 24 September.)
 
 Then read the [disposition register](reports/disposition-register.pdf) for all
 twenty-two at a glance.
@@ -49,7 +67,7 @@ no data for. Absent data is stated as absent.
 | [#1006](https://github.com/openhwgroup/cv32e40p/issues/1006) | cv32e40p | Duplicate hardware-loop jump guard | Waiver, with a stated software rule | **open, no replies** | [PDF](reports/rtl-triage-cv32e40p-1006.pdf) |
 | [#1007](https://github.com/openhwgroup/cv32e40p/issues/1007) | cv32e40p | Single-step with a stalled decode stage | Dead code, proven | **open, no replies** | [PDF](reports/rtl-triage-cv32e40p-1007.pdf) |
 | [#1009](https://github.com/openhwgroup/cv32e40p/issues/1009) | cv32e40p | Nested hardware-loop end addresses too close together | Waiver, with a stated software rule | **open, no replies** | [PDF](reports/rtl-triage-cv32e40p-1009.pdf) |
-| [#1010](https://github.com/openhwgroup/cv32e40p/issues/1010) | cv32e40p | Debug single-step inside a hardware loop | Dead code, proven | **open, no replies** | [PDF](reports/rtl-triage-cv32e40p-1010.pdf) |
+| [#1010](https://github.com/openhwgroup/cv32e40p/issues/1010) | cv32e40p | Debug single-step inside a hardware loop | Rows 2-3 dead code, proven; row 4 reachable, directed test supplied | open; our comment and PRs [#1072](https://github.com/openhwfoundation/cv32e40p/pull/1072), [#1073](https://github.com/openhwfoundation/cv32e40p/pull/1073) (24 Sep 2026), not yet reviewed | [PDF](reports/rtl-triage-cv32e40p-1010.pdf) |
 | [#1011](https://github.com/openhwgroup/cv32e40p/issues/1011) | cv32e40p | Debug entry with no recorded cause | Dead code, proven | **open, no replies** | [PDF](reports/rtl-triage-cv32e40p-1011.pdf) |
 | [#1012](https://github.com/openhwgroup/cv32e40p/issues/1012) | cv32e40p | Debug flush with an impossible single cause | Dead code, proven | **open, no replies** | [PDF](reports/rtl-triage-cv32e40p-1012.pdf) |
 | [#1015](https://github.com/openhwgroup/cv32e40p/issues/1015) | cv32e40p | Operand-select combination in the ID stage | Dead code, proven | **open, no replies** | [PDF](reports/rtl-triage-cv32e40p-1015.pdf) |
@@ -77,8 +95,10 @@ The six closed CV32E40X issues were replayed blind against their pre-fix
 revisions and then against the fix, to test the method against known answers.
 Those fixes are the upstream authors' work, not ours.
 
-Upstream state was checked on 17 September 2026 and will drift. None of these
-reports has been submitted upstream, and none is endorsed by OpenHW.
+Upstream state was checked on 17 September 2026 (#1010 updated on 3 October)
+and will drift. Apart from #1010, where we posted an issue comment and opened
+PRs #1072 and #1073 on 24 September, none of these reports has been submitted
+upstream. None is endorsed by OpenHW.
 
 ## Method
 

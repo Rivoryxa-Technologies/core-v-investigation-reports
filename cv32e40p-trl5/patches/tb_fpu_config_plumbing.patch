@@ -1,0 +1,66 @@
+diff --git a/tb/core/cv32e40p_dut_wrap.sv b/tb/core/cv32e40p_dut_wrap.sv
+index bd9bab3..6d934c2 100644
+--- a/tb/core/cv32e40p_dut_wrap.sv
++++ b/tb/core/cv32e40p_dut_wrap.sv
+@@ -10,7 +10,10 @@
+ 
+ module cv32e40p_dut_wrap
+     #(parameter INSTR_RDATA_WIDTH = 32,
+-      parameter FPU_EN            = 0)
++      parameter FPU_EN            = 0,
++      parameter FPU_ADDMUL_LAT    = 0,
++      parameter FPU_OTHERS_LAT    = 0,
++      parameter ZFINX             = 0)
+     (
+     input  logic                         clk_i,
+     input  logic                         rst_ni,
+@@ -45,7 +48,7 @@ module cv32e40p_dut_wrap
+       #(.PULP_XPULP      (0),
+         .PULP_CLUSTER    (0),
+         .FPU             (FPU_EN),
+-        .PULP_ZFINX      (0),
++        .PULP_ZFINX      (ZFINX),
+         .NUM_MHPMCOUNTERS(1))
+     core_i
+       (.clk_i               (clk_i),
+@@ -94,9 +97,9 @@ module cv32e40p_dut_wrap
+       #(.COREV_PULP      (0),
+         .COREV_CLUSTER   (0),
+         .FPU             (FPU_EN),
+-        .FPU_ADDMUL_LAT  (0),
+-        .FPU_OTHERS_LAT  (0),
+-        .ZFINX           (0),
++        .FPU_ADDMUL_LAT  (FPU_ADDMUL_LAT),
++        .FPU_OTHERS_LAT  (FPU_OTHERS_LAT),
++        .ZFINX           (ZFINX),
+         .NUM_MHPMCOUNTERS(1))
+     core_i
+       (.clk_i               (clk_i),
+diff --git a/tb/core/tb_top.sv b/tb/core/tb_top.sv
+index 2184741..f77c82d 100644
+--- a/tb/core/tb_top.sv
++++ b/tb/core/tb_top.sv
+@@ -22,7 +22,10 @@
+ module tb_top
+     #(parameter INSTR_RDATA_WIDTH = 32,
+       parameter RAM_ADDR_WIDTH    = 22,
+-      parameter FPU_EN            = 0
++      parameter FPU_EN            = 0,
++      parameter FPU_ADDMUL_LAT    = 0,
++      parameter FPU_OTHERS_LAT    = 0,
++      parameter ZFINX             = 0
+      );
+ 
+     // boot_addr: set from +boot_addr=<hex> plusarg, or extracted from ELF header
+@@ -223,7 +226,10 @@ module tb_top
+     // DUT — version selected at compile time inside cv32e40p_dut_wrap
+     cv32e40p_dut_wrap
+       #(.INSTR_RDATA_WIDTH (INSTR_RDATA_WIDTH),
+-        .FPU_EN            (FPU_EN))
++        .FPU_EN            (FPU_EN),
++        .FPU_ADDMUL_LAT    (FPU_ADDMUL_LAT),
++        .FPU_OTHERS_LAT    (FPU_OTHERS_LAT),
++        .ZFINX             (ZFINX))
+     dut_i
+       (.clk_i          (core_clk),
+        .rst_ni         (core_rst_n),
