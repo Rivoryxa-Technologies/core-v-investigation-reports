@@ -26,8 +26,10 @@ ratios, not the absolute numbers.
 ## The question
 
 At the CVE4 meeting of 18 September 2026, Mike Thompson (OpenHW) asked which FPU pipeline
-configuration should go to TRL5, and what each option costs. The group's position on
-performance against area is still open. This report puts cycles, clock period and area for
+configuration should go to TRL5, and what each option costs. Per the meeting minutes, CEA's
+current proposal is one FPU-enabled TRL5 configuration, RV32IMCF_Zicsr_Zifencei_Zicntr (F0 here),
+with a possible need for pipelined FPU configurations still to be clarified. The group's position
+on performance against area is still open. This report puts cycles, clock period and area for
 each configuration side by side.
 
 ## What we did

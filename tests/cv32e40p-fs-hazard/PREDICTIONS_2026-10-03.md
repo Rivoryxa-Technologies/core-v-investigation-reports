@@ -1,6 +1,6 @@
 # Predictions, 2026-10-03: issue 1060 fixes on pipelined FPU configurations
 
-Written before any run of this date. Question (CEA, Matteo Pezzin, on openhwgroup/cv32e40p#1060):
+Written before any run of this date. Question (CEA, Manuel Pezzin, on openhwgroup/cv32e40p#1060):
 are pr1065 (merged in dev) and pr1070 (open, master) only partial fixes, because 1060 is a race,
 in particular with FPU pipeline stages (F1: FPU_ADDMUL_LAT = FPU_OTHERS_LAT = 1, F2: = 2)?
 

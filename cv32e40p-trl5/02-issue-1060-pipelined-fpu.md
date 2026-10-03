@@ -22,10 +22,10 @@
 
 ## The question
 
-Matteo Pezzin (CEA), on [#1060, 9 September 2026](https://github.com/openhwfoundation/cv32e40p/issues/1060#issuecomment-5601441869)
+Manuel Pezzin (CEA), on [#1060, 9 September 2026](https://github.com/openhwfoundation/cv32e40p/issues/1060#issuecomment-5601441869)
 and on [PR #1070](https://github.com/openhwfoundation/cv32e40p/pull/1070#issuecomment-5599123018):
 - The two fixes take very different approaches.
-- He suspects neither fully fixes the problem, because #1060 looks like a race condition,
+- Pezzin suspects neither fully fixes the problem, because #1060 looks like a race condition,
   "in particular … when the FPU additional pipeline stages are enabled" (the P_F1, P_F2,
   P_Z1 and P_Z2 configurations).
 - CEA is considering dropping those configurations and keeping only F0 and Z0, but wants a

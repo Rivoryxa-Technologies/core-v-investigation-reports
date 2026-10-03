@@ -16,7 +16,7 @@ Everything below runs on open-source tools (Verilator, Yosys, SymbiYosys, OpenST
 
 ## 1. FPU pipeline depth: performance against area
 
-**The question.** Which FPU pipeline configuration (latency 0, 1 or 2) should go to TRL5, and what does each cost in area and performance?
+**The question.** CEA's current proposal is one FPU-enabled TRL5 configuration (RV32IMCF_Zicsr_Zifencei_Zicntr, F0 here), and the meeting left open whether pipelined FPU configurations are also needed. What does each FPU pipeline option (latency 0, 1 or 2) cost in area and performance?
 
 **What we found.**
 - **Cycles.** F1 costs 0 to 6% more cycles on five small FP kernels; F2 costs 1.5 to 28.5%. On the testbench's own `matmul_32b_float` program, the costs are 30% and 64%.
@@ -37,7 +37,7 @@ Full report: [01-fpu-pipeline-depth.md](https://github.com/Rivoryxa-Technologies
 
 ## 2. #1060 on the pipelined FPU configurations
 
-**The question** (Matteo Pezzin, CEA, [on #1060](https://github.com/openhwfoundation/cv32e40p/issues/1060#issuecomment-5601441869)). Are PR #1065 and PR #1070 only partial fixes, because #1060 is a race that the FPU pipeline stages could expose? CEA is considering keeping only F0 and Z0.
+**The question** (Manuel Pezzin, CEA, [on #1060](https://github.com/openhwfoundation/cv32e40p/issues/1060#issuecomment-5601441869)). Are PR #1065 and PR #1070 only partial fixes, because #1060 is a race that the FPU pipeline stages could expose? CEA is considering keeping only F0 and Z0.
 
 **What we found.**
 
